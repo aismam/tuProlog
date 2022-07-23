@@ -52,10 +52,10 @@ rotate([H|T], R) :- app(T,[H],R).
 take(_,0,[]) :- !.
 take([H|T], N, [H|R]) :- M is N-1, take(T,M, R).
 
-% take(?List,?Element,?List) 
+% takeLast(?List,?Element,?List) 
 % Input: List and a number
 % Output: List that contain last N elements 
-% take([a,b,c,d],2,X). --> X/[c,d]
+% takeLast([a,b,c,d],2,X). --> X/[c,d]
 % To make this rule we need to define other 3 rules:
 % lastElem:from a list retrieve the last element
 % lastElem([a,b,c,d],X). --> X/d
@@ -64,7 +64,7 @@ take([H|T], N, [H|R]) :- M is N-1, take(T,M, R).
 % inv: from a list retrieve the inverted list
 % inv([a,b,c,d],X). --> X/[d,c,b,a]
 
-take(L,N,Res) :- take_inv(L,N,[E|R]), inv([E|R], Res).
+takeLast(L,N,Res) :- take_inv(L,N,[E|R]), inv([E|R], Res).
 take_inv(_ ,0, []).
 take_inv(L,N, [E|R]) :- M is N-1, lastElem(L,E), removeLast(L,L2), take_inv(L2,M,R).
 
