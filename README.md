@@ -98,3 +98,10 @@ Sequence (tree) of resolvents (list of goals)
 * father(A,Y),father(Y,B) {}
 * father(abraham,B) {A/terach}
 * . {A/terach, B/nachor}
+
+### Lists in Prolog
+Lists in Prolog got an ad-hoc syntax:
+* [H|T], where H is the Head of the list and T is a List that represent the Tail.
+* [] stands for the end of a list
+* [H1,H2] represent a list with 2 values, H1 and H2.
+* [H1,H2|T] represent first 2 values of a list (H1,H2) and the tail (T).
