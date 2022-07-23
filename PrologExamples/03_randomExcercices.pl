@@ -51,3 +51,29 @@ rotate([H|T], R) :- app(T,[H],R).
 % take([a,b,1,2,c,3],3,X). --> X/[1,b,1]
 take(_,0,[]) :- !.
 take([H|T], N, [H|R]) :- M is N-1, take(T,M, R).
+
+% take(?List,?Element,?List) 
+% Input: List and a number
+% Output: List that contain last N elements 
+% take([a,b,c,d],2,X). --> X/[c,d]
+% To make this rule we need to define other 3 rules:
+% lastElem:from a list retrieve the last element
+% lastElem([a,b,c,d],X). --> X/d
+% removeLast: from a list retrieve a list without the last element
+% removeLast([a,b,c,d],X). --> X/[a,b,c]
+% inv: from a list retrieve the inverted list
+% inv([a,b,c,d],X). --> X/[d,c,b,a]
+
+take(L,N,Res) :- take_inv(L,N,[E|R]), inv([E|R], Res).
+take_inv(_ ,0, []).
+take_inv(L,N, [E|R]) :- M is N-1, lastElem(L,E), removeLast(L,L2), take_inv(L2,M,R).
+
+lastElem([E],E).
+lastElem([H|T], R) :- lastElem(T,R).
+
+removeLast([X|Xs],Ys) :- removeLast_prev(Xs, Ys, X).
+removeLast_prev([],[],_).
+removeLast_prev([X|Xs], [X1|Ys] ,X1) :- removeLast_prev(Xs,Ys,X).
+
+inv([],[]).
+inv([H|T], L) :- inv(T, R), append(R,[H],L).
