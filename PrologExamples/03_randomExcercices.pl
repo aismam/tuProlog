@@ -63,7 +63,6 @@ take([H|T], N, [H|R]) :- M is N-1, take(T,M, R).
 % removeLast([a,b,c,d],X). --> X/[a,b,c]
 % inv: from a list retrieve the inverted list
 % inv([a,b,c,d],X). --> X/[d,c,b,a]
-
 takeLast(L,N,Res) :- take_inv(L,N,[E|R]), inv([E|R], Res).
 take_inv(_ ,0, []).
 take_inv(L,N, [E|R]) :- M is N-1, lastElem(L,E), removeLast(L,L2), take_inv(L2,M,R).
