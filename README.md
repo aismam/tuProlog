@@ -1,4 +1,4 @@
-# Prolog introduction and exercices
+# Prolog introduction and exercises 
 
 ## Logic Programming
 LP is using mathematical logic for computing programming, logic is used as declarative representation language and as a theorem-prover.
@@ -41,6 +41,9 @@ The 2Prolog integration framework, many versions available
 * download the runnable package
 * just double-click 2p-4.0.3.jar and you are ready (should use JDK 1.8)
 * or: java -jar 2p-4.0.4.jar from the console
+
+# Basic Prolog exercises
+The file where is writed those exercises  is here: https://github.com/aismam/tuProlog/blob/main/PrologExamples/01_basicProlog.pl
 
 ## Part 1: Queries on list
 
