@@ -1,4 +1,4 @@
-# Prolog exercices.
+# Prolog introduction and exercices
 
 ## Logic Programming
 LP is using mathematical logic for computing programming, logic is used as declarative representation language and as a theorem-prover.
