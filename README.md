@@ -76,6 +76,8 @@ case, repeatedly use Next button until all the solutions are found
 ###### Resolution Tree
 The tree represents the computational behaviour: it is traversed in the so-called depth-first (left-most) strategy which leads to the order of solutions X/a, Y/a, Z/a
 
+![image](https://user-images.githubusercontent.com/72988335/180873998-18e04fc7-b8e1-4a48-bd3d-852ab3842cc2.png)
+
 #### Ex1.2: search2
 ``` 
 % search2(Elem, List)
@@ -211,7 +213,99 @@ seq(N,[0|T]):- N > 0, N2 is N-1, seq(N2,T).
 % example: seqR2(4,[0,1,2,3,4]).
 ```
 
+# Advanced Prolog exercises
+The file where is writed those exercises  is here: [https://github.com/aismam/tuProlog/blob/main/PrologExamples/01_basicProlog.pl](https://github.com/aismam/tuProlog/blob/main/PrologExamples/02_advancedProlog.pl)
+
+## Case 1: dropAny
+```
+% dropAny(?Elem,?List,?OutList)
+dropAny(X,[X|T],T).
+dropAny(X,[H|Xs],[H|L]):-dropAny(X,Xs,L).
+```
+Drops any occurrence of element
+* dropAny(10,[10,20,10,30,10],L)
+   * L/[20,10,30,10]
+   * L/[10,20,30,10]
+   * L/[10,20,10,30]
+
+### Ex1.1: other drops
+Try to realise some of the following variations, by using cut and/or reworking the implementation
+* **dropFirst:** drops only the first occurrence (showing no alternative results)
+* **dropLast:** drops only the last occurrence (showing no alternative results)
+* **dropAll:** drop all occurrences, returning a single list as result
+
+## Case 2: Data structure
+Our model
+* as a list of couples [e(1,1),e(1,2),e(2,3),e(3,1)]
+* the order of elements in the list is not relevant
+* we use number to label nodes, but it could be anything
+
+![image](https://user-images.githubusercontent.com/72988335/180873182-c929d61e-f279-4c8f-9da5-20deb437abf1.png)
+
+### Ex2.1: fromList
+```
+% fromList(+List,-Graph)
+fromList([_],[]).
+fromList([H1,H2|T],[e(H1,H2)|L]):- fromList([H2|T],L).
+```
+It obtains a graph from a list
+* fromList([10,20,30],[e(10,20),e(20,30)]).
+* fromList([10,20],[e(10,20)]).
+* fromList([10],[]).
+
+![image](https://user-images.githubusercontent.com/72988335/180873331-4fa92c04-905c-4ea3-8a3c-807578c21c64.png)
+
+### Ex2.2: fromCircList
+```
+% fromCircList(+List,-Graph)
+% which implementation?
+```
+Obtain a graph from a circular list
+* fromCircList([10,20,30],[e(10,20),e(20,30),e(30,10)]).
+* fromCircList([10,20],[e(10,20),e(20,10)]).
+* fromCircList([10],[e(10,10)]).
+
+![image](https://user-images.githubusercontent.com/72988335/180873413-b3ab6418-74f3-4dfd-a5ca-da8e74220a35.png)
+
+### Ex2.3: dropNode
+```
+% dropNode(+Graph, +Node, -OutGraph)
+% drop all edges starting and leaving from a Node
+% use dropAll defined in 1.1
+dropNode(G,N,O):- dropAll(G,e(N,_),G2), dropAll(G2,e(_,N),O).
+```
+dropNode([e(1,2),e(1,3),e(2,3)],1,[e(2,3)]).
+
+### Ex2.4: reaching
+```
+% reaching(+Graph, +Node, -List)
+% all the nodes that can be reached in 1 step from Node possibly use findall, 
+% looking for e(Node,_) combined  with member(?Elem,?List)
+```
+reaching([e(1,2),e(1,3),e(2,3)],1,L). -> L/[2,3]
+
+reaching([e(1,2),e(1,2),e(2,3)],1,L). -> L/[2,2]).
 
 
+### Ex2.5: anypath
+```
+% anypath(+Graph, +Node1, +Node2, -ListPath)
+% a path from Node1 to Node2
+% if there are many path, they are showed 1-by-1
+```
+anypath([e(1,2),e(1,3),e(2,3)],1,3,L).
+* L/[e(1,2),e(2,3)]
+* L/[e(1,3)]
 
+Implement it; suggestion:
+* a path from N1 to N2 exists if there is a e(N1,N2)
+* a path from N1 to N2 is OK if N3 can be reached from N1, and then there is a path from N2 to N3, recursively
 
+### Ex2.6: allreaching
+```
+% allreaching(+Graph, +Node, -List)
+% all the nodes that can be reached from Node
+% Suppose the graph is NOT circular!
+% Use findall and anyPath!
+```
+allreaching([e(1,2),e(2,3),e(3,5)],1,[2,3,5]).
