@@ -1,5 +1,7 @@
 # Prolog introduction and exercises 
 
+These files were used for the preparation of the PPS exam of the unibo master's degree in engineering and computer science (UNIBO).
+
 ## Logic Programming
 LP is using mathematical logic for computing programming, logic is used as declarative representation language and as a theorem-prover.
 
